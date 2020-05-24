@@ -1,11 +1,21 @@
 package com.example.imageeditor;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.PointF;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -16,15 +26,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.ahmedadeltito.photoeditorsdk.PhotoEditorSDK;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
-    ImageView photoview2;
+    ImageView imageView;
     float[] lastEvent = null;
     float d = 0f,temp = 0f,targetAngle = 30f,currentAngle = 0f;
     float newRot = 0f;
@@ -39,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     float oldDist = 1f;
     private float xCoOrdinate, yCoOrdinate;
     private RelativeLayout layout;
+    private Button selectImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +65,12 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
         layout = findViewById(R.id.rel);
-        photoview2 = findViewById(R.id.imageView);
+        imageView = findViewById(R.id.imageView);
+        selectImage = findViewById(R.id.button);
+
+        if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+            takePermission();
+        }
 
         layout.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -60,7 +81,21 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        selectImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/*");
+                startActivityForResult(intent,2);
+            }
+        });
     }
+
+    private void takePermission() {
+        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},1);
+    }
+
     private void viewTransformation(View view, MotionEvent event) {
         switch (event.getAction() & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_DOWN:
@@ -126,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
                             Vibrator vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                             if(temp >= targetAngle) {
                                 vibe.vibrate(100);
-                                Toast.makeText(this,"You reached "+Math.ceil(temp) +" degrees",Toast.LENGTH_SHORT)
+                                Toast.makeText(this,"You reached "+Math.floor(temp) +" degrees",Toast.LENGTH_SHORT)
                                         .show();
 //                                Log.e(TAG,"Vibrated");
 //                                view.setRotation((float) targetAngle);
@@ -187,4 +222,29 @@ public class MainActivity extends AppCompatActivity {
         point.set(x / 2, y / 2);
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode ==1 ){
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+
+            }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 2 && resultCode == RESULT_OK) {
+            try {
+                InputStream in = getContentResolver().openInputStream(data.getData());
+                Bitmap bitmap = BitmapFactory.decodeStream(in);
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG,100,bos);
+                imageView.setImageBitmap(bitmap);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
 }
