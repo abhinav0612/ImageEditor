@@ -4,30 +4,169 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:id="@+id/relativeLayout"
+    android:background="#DCDCDD"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:id="@+id/constraintLayout"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
 
-
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:id="@+id/rel"
-        android:layout_centerVertical="true"
-        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:src="@drawable/rectangle"
+            tools:layout_editor_absoluteX="72dp"
+            tools:layout_editor_absoluteY="332dp" />
 
         <ImageView
             android:layout_width="wrap_content"
-            android:id="@+id/imageView"
-            android:layout_marginTop="-17dp"
             android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toEndOf="@id/imageView"
+            app:layout_constraintEnd_toEndOf="@id/imageView"
+            app:layout_constraintTop_toBottomOf="@id/barTop"
+            app:layout_constraintBottom_toTopOf="@id/barBottom"
+            android:id="@+id/barRight"
+            android:src="@drawable/ic_rectangle_397"
+            tools:layout_editor_absoluteX="267dp"
+            tools:layout_editor_absoluteY="390dp" />
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/barLeft"
+            android:scaleType="centerCrop"
+            app:layout_constraintTop_toBottomOf="@id/barTop"
+            app:layout_constraintBottom_toTopOf="@id/barBottom"
+            app:layout_constraintStart_toStartOf="@id/imageView"
+            app:layout_constraintEnd_toStartOf="@id/imageView"
+            android:src="@drawable/ic_rectangle_397"
+            tools:layout_editor_absoluteX="63dp"
+            tools:layout_editor_absoluteY="373dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/imageView"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/barBottom"
+            app:layout_constraintStart_toEndOf="@id/barLeft"
+            app:layout_constraintEnd_toStartOf="@id/barRight"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_rectangle_395"
+            app:layout_constraintBottom_toBottomOf="@id/imageView"
+            app:layout_constraintTop_toBottomOf="@id/imageView"
+            tools:layout_editor_absoluteX="155dp" />
+
+        <ImageView
+            android:id="@+id/barTop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imageView"
+            android:layout_centerHorizontal="true"
+            app:layout_constraintStart_toEndOf="@id/barLeft"
+            app:layout_constraintEnd_toStartOf="@id/barRight"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_rectangle_395"
+            app:layout_constraintBottom_toTopOf="@id/imageView"
+            app:layout_constraintTop_toTopOf="@id/imageView"
+            tools:layout_editor_absoluteX="155dp" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/imageView"
+            app:layout_constraintEnd_toStartOf="@id/imageView"
+            app:layout_constraintTop_toTopOf="@id/imageView"
+            app:layout_constraintBottom_toTopOf="@id/imageView"
+            android:id="@+id/topLeft"
+            android:src="@drawable/ellipse_59"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/imageView"
+            app:layout_constraintEnd_toStartOf="@id/imageView"
+            app:layout_constraintTop_toBottomOf="@id/imageView"
+            app:layout_constraintBottom_toBottomOf="@id/imageView"
+            android:id="@+id/topRight"
+            android:src="@drawable/ellipse_59"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/imageView"
+            app:layout_constraintEnd_toEndOf="@id/imageView"
+            app:layout_constraintTop_toTopOf="@id/imageView"
+            app:layout_constraintBottom_toTopOf="@id/imageView"
+            android:id="@+id/bottomLeft"
+            android:src="@drawable/ellipse_59"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/imageView"
+            app:layout_constraintEnd_toEndOf="@id/imageView"
+            app:layout_constraintTop_toBottomOf="@id/imageView"
+            app:layout_constraintBottom_toBottomOf="@id/imageView"
+            android:id="@+id/bottomRight"
+            android:src="@drawable/ellipse_59"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/barTop"
+            app:layout_constraintStart_toEndOf="@id/barLeft"
+            app:layout_constraintEnd_toStartOf="@id/barRight"
+            android:layout_marginBottom="15dp"
+            android:id="@+id/semiTop"
+            android:src="@drawable/ic_subtraction_18"
             />
-    </RelativeLayout>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/barBottom"
+            app:layout_constraintStart_toEndOf="@id/barLeft"
+            app:layout_constraintEnd_toStartOf="@id/barRight"
+            android:layout_marginTop="15dp"
+            android:id="@+id/semiBottom"
+            android:src="@drawable/ic_subtraction_20"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@id/barLeft"
+            app:layout_constraintTop_toTopOf="@id/barTop"
+            app:layout_constraintBottom_toBottomOf="@id/barBottom"
+            android:layout_marginRight="15dp"
+            android:id="@+id/semiLeft"
+            android:src="@drawable/ic_subtraction_22"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/barRight"
+            app:layout_constraintTop_toTopOf="@id/barTop"
+            app:layout_constraintBottom_toBottomOf="@id/barBottom"
+            android:layout_marginLeft="15dp"
+            android:id="@+id/semiRight"
+            android:src="@drawable/ic_subtraction_24"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/button"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="50dp"
+        android:text="Select Image"
         android:layout_alignParentBottom="true"
-        android:text="Select Image"/>
+        android:layout_marginBottom="30dp"
+        android:layout_centerHorizontal="true"/>
+
 </RelativeLayout>

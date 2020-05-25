@@ -3,6 +3,7 @@ package com.example.imageeditor;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     private PointF mid = new PointF();
     float oldDist = 1f;
     private float xCoOrdinate, yCoOrdinate;
-    private RelativeLayout layout;
+    private ConstraintLayout layout;
     private Button selectImage;
 
     @Override
@@ -64,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_main);
-        layout = findViewById(R.id.rel);
+        layout = findViewById(R.id.constraintLayout);
         imageView = findViewById(R.id.imageView);
         selectImage = findViewById(R.id.button);
 
@@ -75,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         layout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                RelativeLayout view = (RelativeLayout) v;
+                ConstraintLayout view = (ConstraintLayout) v;
                 view.bringToFront();
                 viewTransformation(view, event);
                 return true;
@@ -187,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
                                     public void run() {
                                         layout.setEnabled(true);
                                     }
-                                },2000);
+                                },1500);
 
 //                                layout.setEnabled(false);
 
